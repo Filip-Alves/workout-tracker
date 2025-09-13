@@ -2,16 +2,16 @@ package com.example.workout_tracker.user;
 
 import com.example.workout_tracker.user.dto.CreateUserRequest;
 import com.example.workout_tracker.user.dto.UserResponse;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserMapper {
 
-    public static User toUser(CreateUserRequest request) {
+    public static User toUser(CreateUserRequest request, PasswordEncoder passwordEncoder) {
         User user = new User();
         user.setUsername(request.username());
         user.setEmail(request.email());
 
-        // temporaire :)
-        user.setPasswordHash(request.password());
+        user.setPasswordHash(passwordEncoder.encode(request.password()));
         return user;
     }
 
