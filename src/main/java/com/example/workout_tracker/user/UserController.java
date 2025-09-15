@@ -3,11 +3,10 @@ package com.example.workout_tracker.user;
 import com.example.workout_tracker.user.dto.CreateUserRequest;
 import com.example.workout_tracker.user.dto.UserResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -27,5 +26,12 @@ public class UserController {
         User savedUser = userRepository.save(newUser);
 
         return UserMapper.toUserResponse(savedUser);
+    }
+
+    @GetMapping("/me")
+    public UserResponse getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        User currentUser = (User) userDetails;
+
+        return UserMapper.toUserResponse(currentUser);
     }
 }
