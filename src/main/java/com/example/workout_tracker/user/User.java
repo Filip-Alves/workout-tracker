@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "created_at", nullable = false, updatable = false) // updatable = false garantit que cette valeur ne sera jamais mise à jour
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @Column(name = "updated_at", nullable = false)
