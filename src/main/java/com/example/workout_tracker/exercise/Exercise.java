@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.Instant;
 import java.util.List;
@@ -30,6 +32,7 @@ public class Exercise {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private ExerciseCategory category;
 
     @Column(name = "created_at", nullable = false, updatable = false)
