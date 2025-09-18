@@ -3,6 +3,7 @@ package com.example.workout_tracker.exercise;
 import com.example.workout_tracker.exception.ResourceNotFoundException;
 import com.example.workout_tracker.exercise.dto.CreateExerciseRequest;
 import com.example.workout_tracker.exercise.dto.ExerciseResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -59,4 +60,15 @@ public class ExerciseController {
 
         return ExerciseMapper.toExerciseResponse(updatedExercise);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteExercise(@PathVariable Long id) {
+
+        Exercise exercise = exerciseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found with id: " + id));
+
+        exerciseRepository.delete(exercise);
+
+        return ResponseEntity.noContent().build();
+     }
 }
