@@ -43,4 +43,20 @@ public class ExerciseController {
                 .map(ExerciseMapper::toExerciseResponse)
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found with id: " + id));
     }
+
+    @PutMapping("/{id}")
+    public ExerciseResponse updateExercise(@PathVariable Long id, @RequestBody CreateExerciseRequest request ) {
+
+        Exercise existingExercise = exerciseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found with id: " + id));
+
+        existingExercise.setName(request.name());
+        existingExercise.setDescription(request.description());
+        existingExercise.setMuscleGroups(request.muscleGroups());
+        existingExercise.setCategory(request.category());
+
+        Exercise updatedExercise = exerciseRepository.save(existingExercise);
+
+        return ExerciseMapper.toExerciseResponse(updatedExercise);
+    }
 }
