@@ -5,10 +5,9 @@ import com.example.workout_tracker.user.User;
 import com.example.workout_tracker.workout.dto.CreateWorkoutRequest;
 import com.example.workout_tracker.workout.dto.WorkoutResponse;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/workouts")
@@ -30,4 +29,16 @@ public class WorkoutController {
 
         return WorkoutMapper.toWorkoutResponse(savedWorkout);
     }
+
+    @GetMapping
+    public List<WorkoutResponse> getWorkoutsForCurrentUser(@AuthenticationPrincipal User currentUser) {
+
+        List<Workout> workouts = workoutRepository.findByUser(currentUser);
+
+        return workouts.stream()
+                .map(WorkoutMapper::toWorkoutResponse)
+                .toList();
+    }
+
+
 }
