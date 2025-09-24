@@ -64,4 +64,17 @@ public class WorkoutServiceImpl implements WorkoutService {
 
         return WorkoutExerciseMapper.toWorkoutExerciseResponse(savedWorkoutExercise);
     }
+
+    @Override
+    public WorkoutResponse getWorkoutById(Long workoutId, User currentUser) {
+
+        Workout workout = workoutRepository.findById(workoutId)
+                .orElseThrow(() -> new ResourceNotFoundException("Workout not found with id: " + workoutId));
+
+        if (!workout.getUser().getId().equals(currentUser.getId())) {
+            throw new ResourceNotFoundException("Workout not found with id: " + workoutId);
+        }
+
+        return WorkoutMapper.toWorkoutResponse(workout);
+    }
 }

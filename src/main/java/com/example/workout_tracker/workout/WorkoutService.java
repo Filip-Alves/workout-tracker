@@ -16,4 +16,5 @@ public interface WorkoutService {
 
     WorkoutExerciseResponse addExerciseToWorkout(Long workoutId, AddExerciseToWorkoutRequest request, User currentUser);
 
+    WorkoutResponse getWorkoutById(Long workoutId, User currentUser);
 }

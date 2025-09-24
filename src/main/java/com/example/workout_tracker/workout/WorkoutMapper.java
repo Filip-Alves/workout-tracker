@@ -22,7 +22,9 @@ public class WorkoutMapper {
                 workout.getId(),
                 workout.getName(),
                 workout.getDescription(),
-                workout.getNotes()
+                workout.getNotes(),
+                workout.getWorkoutExercises().stream()
+                        .map(WorkoutExerciseMapper::toWorkoutExerciseResponse).toList()
         );
     }
 }

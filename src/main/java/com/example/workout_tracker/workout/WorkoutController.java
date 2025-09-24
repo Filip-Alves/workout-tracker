@@ -39,4 +39,9 @@ public class WorkoutController {
         return workoutService.addExerciseToWorkout(workoutId, request, currentUser);
     }
 
+    @GetMapping("/{workoutId}")
+    public WorkoutResponse getWorkoutById(@PathVariable Long workoutId, @AuthenticationPrincipal User currentUser) {
+        return workoutService.getWorkoutById(workoutId, currentUser);
+    }
+
 }
