@@ -5,6 +5,7 @@ import com.example.workout_tracker.workout.dto.AddExerciseToWorkoutRequest;
 import com.example.workout_tracker.workout.dto.CreateWorkoutRequest;
 import com.example.workout_tracker.workout.dto.WorkoutExerciseResponse;
 import com.example.workout_tracker.workout.dto.WorkoutResponse;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface WorkoutService {
     WorkoutExerciseResponse addExerciseToWorkout(Long workoutId, AddExerciseToWorkoutRequest request, User currentUser);
 
     WorkoutResponse getWorkoutById(Long workoutId, User currentUser);
+
+    void deleteWorkout(Long id, User currentUser);
 }

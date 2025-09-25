@@ -6,6 +6,7 @@ import com.example.workout_tracker.workout.dto.CreateWorkoutRequest;
 import com.example.workout_tracker.workout.dto.WorkoutExerciseResponse;
 import com.example.workout_tracker.workout.dto.WorkoutResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,13 @@ public class WorkoutController {
     @GetMapping("/{workoutId}")
     public WorkoutResponse getWorkoutById(@PathVariable Long workoutId, @AuthenticationPrincipal User currentUser) {
         return workoutService.getWorkoutById(workoutId, currentUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWorkout(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+        workoutService.deleteWorkout(id, currentUser);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

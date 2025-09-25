@@ -9,6 +9,7 @@ import com.example.workout_tracker.workout.dto.CreateWorkoutRequest;
 import com.example.workout_tracker.workout.dto.WorkoutExerciseResponse;
 import com.example.workout_tracker.workout.dto.WorkoutResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,5 +77,17 @@ public class WorkoutServiceImpl implements WorkoutService {
         }
 
         return WorkoutMapper.toWorkoutResponse(workout);
+    }
+
+    @Override
+    public void deleteWorkout(Long id, User currentUser) {
+
+        Workout workout = workoutRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Workout not found with id: " + id));
+
+        if (!workout.getUser().getId().equals(currentUser.getId())) {
+            throw new ResourceNotFoundException("Workout not found with id: " + id);
+        }
+        workoutRepository.delete(workout);
     }
 }
