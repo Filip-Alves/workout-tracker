@@ -19,5 +19,7 @@ public interface WorkoutService {
 
     WorkoutResponse getWorkoutById(Long workoutId, User currentUser);
 
+    WorkoutResponse updateWorkout(Long id, CreateWorkoutRequest request, User currentUser);
+
     void deleteWorkout(Long id, User currentUser);
 }

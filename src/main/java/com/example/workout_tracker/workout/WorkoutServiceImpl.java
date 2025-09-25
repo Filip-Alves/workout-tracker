@@ -80,6 +80,19 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
+    public WorkoutResponse updateWorkout(Long id, CreateWorkoutRequest request, User currentUser) {
+        Workout existingWorkout = workoutFounded(id, currentUser);
+
+        existingWorkout.setName(request.name());
+        existingWorkout.setDescription(request.description());
+        existingWorkout.setNotes(request.notes());
+
+        Workout savedWorkout = workoutRepository.save(existingWorkout);
+
+        return WorkoutMapper.toWorkoutResponse(savedWorkout);
+    }
+
+    @Override
     public void deleteWorkout(Long id, User currentUser) {
 
         Workout workout = workoutRepository.findById(id)
@@ -89,5 +102,16 @@ public class WorkoutServiceImpl implements WorkoutService {
             throw new ResourceNotFoundException("Workout not found with id: " + id);
         }
         workoutRepository.delete(workout);
+    }
+
+    private Workout workoutFounded(Long id, User user) {
+        Workout workout = workoutRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Workout not found with id: " + id));
+
+        if (!workout.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Workout not found with id: " + id);
+        }
+
+        return workout;
     }
 }

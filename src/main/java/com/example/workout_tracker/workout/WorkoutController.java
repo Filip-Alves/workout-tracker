@@ -52,4 +52,13 @@ public class WorkoutController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    public WorkoutResponse updateWorkout(
+            @PathVariable Long id,
+            @RequestBody CreateWorkoutRequest request,
+            @AuthenticationPrincipal User currentUser) {
+
+        return workoutService.updateWorkout(id, request, currentUser);
+    }
+
 }
