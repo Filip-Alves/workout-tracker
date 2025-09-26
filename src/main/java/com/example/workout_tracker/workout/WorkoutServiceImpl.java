@@ -93,6 +93,28 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
+    public WorkoutExerciseResponse updateExerciseInWorkout(
+            Long workoutId, Long workoutExerciseId, AddExerciseToWorkoutRequest request, User currentUser
+    ) {
+        workoutFounded(workoutId, currentUser);
+
+        WorkoutExercise workoutExercise = workoutExerciseRepository.findByIdAndWorkoutId(workoutExerciseId, workoutId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Exercise entry with id " + workoutExerciseId + " not found in workout " + workoutId
+                ));
+
+        workoutExercise.setSets(request.sets());
+        workoutExercise.setReps(request.reps());
+        workoutExercise.setWeightKg(request.weightKg());
+        workoutExercise.setOrderIndex(request.orderIndex());
+        workoutExercise.setNotes(request.notes());
+
+        WorkoutExercise workoutExerciseSaved = workoutExerciseRepository.save(workoutExercise);
+
+        return WorkoutExerciseMapper.toWorkoutExerciseResponse(workoutExerciseSaved);
+    }
+
+    @Override
     public void deleteWorkout(Long id, User currentUser) {
 
         Workout workout = workoutRepository.findById(id)
