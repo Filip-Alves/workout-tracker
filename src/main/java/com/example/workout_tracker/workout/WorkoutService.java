@@ -22,4 +22,6 @@ public interface WorkoutService {
     WorkoutResponse updateWorkout(Long id, CreateWorkoutRequest request, User currentUser);
 
     void deleteWorkout(Long id, User currentUser);
+
+    void removeExerciseFromWorkout(Long workoutId, Long workoutExerciseId, User currentUser);
 }

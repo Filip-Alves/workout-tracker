@@ -104,6 +104,21 @@ public class WorkoutServiceImpl implements WorkoutService {
         workoutRepository.delete(workout);
     }
 
+    @Override
+    public void removeExerciseFromWorkout(Long workoutId, Long workoutExerciseId, User currentUser) {
+
+        workoutFounded(workoutId, currentUser);
+
+        WorkoutExercise workoutExercise = workoutExerciseRepository.findByIdAndWorkoutId(workoutExerciseId, workoutId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Exercise entry with id " + workoutExerciseId + " not found in workout " + workoutId
+                ));
+
+        workoutExerciseRepository.delete(workoutExercise);
+    }
+
+
+
     private Workout workoutFounded(Long id, User user) {
         Workout workout = workoutRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Workout not found with id: " + id));
@@ -114,4 +129,6 @@ public class WorkoutServiceImpl implements WorkoutService {
 
         return workout;
     }
+
+
 }

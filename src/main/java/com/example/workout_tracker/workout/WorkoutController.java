@@ -45,13 +45,6 @@ public class WorkoutController {
         return workoutService.getWorkoutById(workoutId, currentUser);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteWorkout(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
-        workoutService.deleteWorkout(id, currentUser);
-
-        return ResponseEntity.noContent().build();
-    }
-
     @PutMapping("/{id}")
     public WorkoutResponse updateWorkout(
             @PathVariable Long id,
@@ -59,6 +52,24 @@ public class WorkoutController {
             @AuthenticationPrincipal User currentUser) {
 
         return workoutService.updateWorkout(id, request, currentUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWorkout(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+        workoutService.deleteWorkout(id, currentUser);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{workoutId}/exercises/{workoutExerciseId}")
+    public ResponseEntity<Void> removeExerciseFromWorkout(
+            @PathVariable Long workoutId,
+            @PathVariable Long workoutExerciseId,
+            @AuthenticationPrincipal User currentUser
+    ){
+        workoutService.removeExerciseFromWorkout(workoutId, workoutExerciseId, currentUser);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
