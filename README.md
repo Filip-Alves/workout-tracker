@@ -18,8 +18,8 @@ Ce projet est le backend pour une application de suivi d'entraînement. Il fourn
 ## Stack Technique
 
 *   **Langage :** Java 21
-*   **Framework :** Spring Boot 3.3.4
-*   **Sécurité :** Spring Security 6
+*   **Framework :** Spring Boot
+*   **Sécurité :** Spring Security
 *   **Base de Données :** PostgreSQL
 *   **Accès aux Données :** Spring Data JPA / Hibernate
 *   **Migrations de BDD :** Flyway
